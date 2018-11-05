@@ -21,7 +21,8 @@ static char *rtc_file = "/dev/rtc0";
 
 #define IOCTL(f, r, d, rc) rc = ioctl(f, r, d); \
 if (rc) { \
-	fprintf(stderr, "%s returned %d (line %d)\n", #r, errno, __LINE__); \
+	fprintf(stderr, "%s returned %s (%d) at line %d\n", #r, \
+		strerror(errno), errno, __LINE__); \
 	exit(errno); \
 }
 
