@@ -50,6 +50,7 @@ int main(int argc, char **argv)
 	struct rtc_time tm;
 	struct rtc_wkalrm alm;
 	int fd, rc, cmd = 0;
+	int flags;
 
 	if (argc < 2)
 		usage(argv[0]);
@@ -110,6 +111,14 @@ int main(int argc, char **argv)
 		alm.time.tm_year -= 1900;
 		alm.time.tm_mon -= 1;
 		alm.enabled = 1;
+	} else if (!strcmp(argv[1], "vlrd")) {
+		if (argc > 2)
+			rtc_file = argv[2];
+		cmd = RTC_VL_READ;
+	} else if (!strcmp(argv[1], "vlclr")) {
+		if (argc > 2)
+			rtc_file = argv[2];
+		cmd = RTC_VL_CLR;
 	}
 
 	if (!cmd)
@@ -148,6 +157,13 @@ int main(int argc, char **argv)
 		break;
 	case RTC_AIE_OFF:
 		IOCTL(fd, RTC_AIE_OFF, 0, rc);
+		break;
+	case RTC_VL_READ:
+		IOCTL(fd, RTC_VL_READ, &flags, rc);
+		printf("%s: voltage low flags: %x\n", rtc_file, flags);
+		break;
+	case RTC_VL_CLR:
+		IOCTL(fd, RTC_VL_CLR, 0, rc);
 		break;
 	}
 
