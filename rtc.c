@@ -41,6 +41,8 @@ static void usage(char *name)
 	fprintf(stderr, "       %s almset YYYY-MM-DDThh:mm:ss [rtc]\n", name);
 	fprintf(stderr, "       %s aieon [rtc]\n", name);
 	fprintf(stderr, "       %s aieoff [rtc]\n", name);
+	fprintf(stderr, "       %s vlrd [rtc]\n", name);
+	fprintf(stderr, "       %s vlclr [rtc]\n", name);
 
 	exit(EINVAL);
 }
