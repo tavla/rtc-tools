@@ -54,6 +54,12 @@ static struct {
 		.expected = { .tm_year = 170, .tm_mday = 1,
 			      .tm_hour = 0, .tm_min = 0, .tm_sec = 0 }
 	},
+	{ /* 2079 to 2080 */
+		.tm = { .tm_year = 179, .tm_mon = 11, .tm_mday = 31,
+			.tm_hour = 23, .tm_min = 59, .tm_sec = 59 },
+		.expected = { .tm_year = 180, .tm_mday = 1,
+			      .tm_hour = 0, .tm_min = 0, .tm_sec = 0 }
+	},
 	{ /* 2099 to 2100 */
 		.tm = { .tm_year = 199, .tm_mon = 11, .tm_mday = 31,
 			.tm_hour = 23, .tm_min = 59, .tm_sec = 59 },
