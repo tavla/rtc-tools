@@ -52,7 +52,7 @@ int main(int argc, char **argv)
 	struct rtc_time tm;
 	struct rtc_wkalrm alm;
 	int fd, rc, cmd = 0;
-	int flags;
+	unsigned int flags;
 
 	if (argc < 2)
 		usage(argv[0]);
