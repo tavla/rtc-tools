@@ -90,8 +90,6 @@ int get_offset_alarm(struct timespec *diff, int rtc)
 	unsigned long data;
 	int rc;
 
-	//TODO: save/restore surrent alarm
-
 	rc = ioctl(rtc, RTC_RD_TIME, &stm);
 	if (rc < 0) {
 		perror("RTC_RD_TIME");
