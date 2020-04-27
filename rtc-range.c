@@ -36,10 +36,22 @@ static struct {
 	struct rtc_time tm;
 	struct rtc_time expected;
 } dates [] = {
+	{ /* UNIX epoch */
+		.tm = { .tm_year = 70, .tm_mon = 0, .tm_mday = 1,
+			.tm_hour = 0, .tm_min = 0, .tm_sec = 0 },
+		.expected = { .tm_year = 70, .tm_mon = 0, .tm_mday = 1,
+			      .tm_hour = 0, .tm_min = 0, .tm_sec = 1 }
+	},
 	{ /* 2000 is a leap year */
 		.tm = { .tm_year = 100, .tm_mon = 1, .tm_mday = 28,
 			.tm_hour = 23, .tm_min = 59, .tm_sec = 59 },
 		.expected = { .tm_year = 100, .tm_mon = 1, .tm_mday = 29,
+			      .tm_hour = 0, .tm_min = 0, .tm_sec = 0 }
+	},
+	{ /* 2020 is a leap year */
+		.tm = { .tm_year = 120, .tm_mon = 1, .tm_mday = 28,
+			.tm_hour = 23, .tm_min = 59, .tm_sec = 59 },
+		.expected = { .tm_year = 120, .tm_mon = 1, .tm_mday = 29,
 			      .tm_hour = 0, .tm_min = 0, .tm_sec = 0 }
 	},
 	{ /* signed 32bit time_t overflow */
