@@ -7,6 +7,7 @@
 
 #include <errno.h>
 #include <fcntl.h>
+#include <linux/const.h>
 #include <linux/rtc.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,6 +19,14 @@
 #include <unistd.h>
 
 static char *rtc_file = "/dev/rtc0";
+
+#ifndef RTC_VL_DATA_INVALID
+#define RTC_VL_DATA_INVALID	_BITUL(0) /* Voltage too low, RTC data is invalid */
+#define RTC_VL_BACKUP_LOW	_BITUL(1) /* Backup voltage is low */
+#define RTC_VL_BACKUP_EMPTY	_BITUL(2) /* Backup empty or not present */
+#define RTC_VL_ACCURACY_LOW	_BITUL(3) /* Voltage is low, RTC accuracy is reduced */
+#define RTC_VL_BACKUP_SWITCH	_BITUL(4) /* Backup switchover happened */
+#endif
 
 #define IOCTL(f, r, d, rc) rc = ioctl(f, r, d); \
 if (rc) { \
@@ -163,6 +172,16 @@ int main(int argc, char **argv)
 	case RTC_VL_READ:
 		IOCTL(fd, RTC_VL_READ, &flags, rc);
 		printf("%s: voltage low flags: %x\n", rtc_file, flags);
+		if (flags & RTC_VL_DATA_INVALID)
+			printf("Voltage too low, RTC data is invalid\n");
+		if (flags & RTC_VL_BACKUP_LOW)
+			printf("Backup voltage is low\n");
+		if (flags & RTC_VL_BACKUP_EMPTY)
+			printf("Backup empty or not present\n");
+		if (flags & RTC_VL_ACCURACY_LOW)
+			printf("Voltage is low, RTC accuracy is reduced\n");
+		if (flags & RTC_VL_BACKUP_SWITCH)
+			printf("Backup switchover happened\n");
 		break;
 	case RTC_VL_CLR:
 		IOCTL(fd, RTC_VL_CLR, 0, rc);
