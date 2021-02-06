@@ -98,9 +98,9 @@ static const char *feature_names[] = {
 	"RTC_FEATURE_BACKUP_SWITCH_MODE",
 };
 
-static void usage(char *name)
+static __attribute__ ((noreturn)) void usage(char *name)
 {
-	int i;
+	unsigned int i;
 
 	fprintf(stderr, "Usage: %s <command>\n", name);
 	fprintf(stderr, "       %s rd [rtc]\n", name);
@@ -124,7 +124,7 @@ static void usage(char *name)
 
 static int parse_rtc_param(struct rtc_param *param, char *param_name, char *index, char *value)
 {
-	int i;
+	unsigned int i;
 
 	for (i = 0; i < ARRAY_SIZE(param_names); i++)
 		if (!strcmp(param_name, param_names[i]))
@@ -167,8 +167,9 @@ int main(int argc, char **argv)
 	struct rtc_time tm;
 	struct rtc_wkalrm alm;
 	struct rtc_param param;
-	int i, fd, rc, cmd = 0;
-	unsigned int flags;
+	int fd, rc;
+	unsigned int i, flags;
+	unsigned long cmd = 0;
 
 	if (argc < 2)
 		usage(argv[0]);
